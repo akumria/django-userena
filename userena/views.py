@@ -21,6 +21,17 @@ from userena import settings as userena_settings
 
 from guardian.decorators import permission_required_or_403
 
+def reverse_with_username(url, user):
+    """
+    Some URLs want a username parameters but that is only required if
+    USERENA_WITHOUT_USERNAMES is False.
+    """
+    if userena_settings.USERENA_WITHOUT_USERNAMES:
+        return reverse(url)
+    else:
+        return reverse(url, kwargs={'username': user.username})
+
+
 @secure_required
 def signup(request, signup_form=SignupForm,
            template_name='userena/signup_form.html', success_url=None,
