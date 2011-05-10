@@ -90,10 +90,24 @@ urlpatterns = patterns('',
        userena_views.profile_edit,
        name='userena_profile_edit'),
 
-    # View profiles
-    url(r'^(?P<username>[\.\w]+)/$',
-       userena_views.profile_detail,
-       name='userena_profile_detail'),
+)
+
+
+# View profiles
+if userena_settings.USERENA_WITHOUT_USERNAMES:
+    urlpatterns += patterns('',
+        url(r'^detail/$',
+           userena_views.profile_detail,
+           name='userena_profile_detail'),
+    )
+else:
+    urlpatterns += patterns('',
+        url(r'^(?P<username>[\.\w]+)/$',
+           userena_views.profile_detail,
+           name='userena_profile_detail'),
+    )
+
+urlpatterns += patterns('',
     url(r'^page/(?P<page>[0-9]+)/$',
        userena_views.profile_list,
        name='userena_profile_list_paginated'),
