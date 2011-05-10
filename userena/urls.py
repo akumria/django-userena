@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 from userena import views as userena_views
 from userena import settings as userena_settings
 
+USERENA_USERNAME_REGEX="(?P<username>[\\.\\w]+)/"
+if userena_settings.USERENA_WITHOUT_USERNAMES:
+    USERENA_USERNAME_REGEX=""
+
 urlpatterns = patterns('',
     # Signup, signin and signout
     url(r'^signup/$',
