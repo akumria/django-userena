@@ -43,50 +43,50 @@ urlpatterns = patterns('',
        {'template_name': 'userena/password_reset_complete.html'}),
 
     # Signup
-    url(r'^(?P<username>[\.\w]+)/signup/complete/$',
+    url(r'^%ssignup/complete/$' % USERENA_USERNAME_REGEX,
        userena_views.direct_to_user_template,
        {'template_name': 'userena/signup_complete.html',
         'extra_context': {'userena_activation_days': userena_settings.USERENA_ACTIVATION_DAYS}},
        name='userena_signup_complete'),
 
     # Activate
-    url(r'^(?P<username>[\.\w]+)/activate/(?P<activation_key>\w+)/$',
+    url(r'^%sactivate/(?P<activation_key>\w+)/$' % USERENA_USERNAME_REGEX,
        userena_views.activate,
        name='userena_activate'),
 
     # Change email and confirm it
-    url(r'^(?P<username>[\.\w]+)/email/$',
+    url(r'^%semail/$' % USERENA_USERNAME_REGEX,
        userena_views.email_change,
        name='userena_email_change'),
-    url(r'^(?P<username>[\.\w]+)/email/complete/$',
+    url(r'^%semail/complete/$' % USERENA_USERNAME_REGEX,
        userena_views.direct_to_user_template,
        {'template_name': 'userena/email_change_complete.html'},
        name='userena_email_change_complete'),
-    url(r'^(?P<username>[\.\w]+)/confirm-email/complete/$',
+    url(r'^%sconfirm-email/complete/$' % USERENA_USERNAME_REGEX,
        userena_views.direct_to_user_template,
        {'template_name': 'userena/email_confirm_complete.html'},
        name='userena_email_confirm_complete'),
-    url(r'^(?P<username>[\.\w]+)/confirm-email/(?P<confirmation_key>\w+)/$',
+    url(r'^%sconfirm-email/(?P<confirmation_key>\w+)/$' % USERENA_USERNAME_REGEX,
        userena_views.email_confirm,
        name='userena_email_confirm'),
 
     # Disabled account
-    url(r'^(?P<username>[\.\w]+)/disabled/$',
+    url(r'^%sdisabled/$' % USERENA_USERNAME_REGEX,
        userena_views.direct_to_user_template,
        {'template_name': 'userena/disabled.html'},
        name='userena_disabled'),
 
     # Change password
-    url(r'^(?P<username>[\.\w]+)/password/$',
+    url(r'^%spassword/$' % USERENA_USERNAME_REGEX,
        userena_views.password_change,
        name='userena_password_change'),
-    url(r'^(?P<username>[\.\w]+)/password/complete/$',
+    url(r'^%spassword/complete/$' % USERENA_USERNAME_REGEX,
        userena_views.direct_to_user_template,
        {'template_name': 'userena/password_complete.html'},
        name='userena_password_change_complete'),
 
     # Edit profile
-    url(r'^(?P<username>[\.\w]+)/edit/$',
+    url(r'^%sedit/$' % USERENA_USERNAME_REGEX,
        userena_views.profile_edit,
        name='userena_profile_edit'),
 
