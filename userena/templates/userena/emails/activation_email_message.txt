@@ -5,7 +5,11 @@
 
 {% trans "To activate your account you should click on the link below:" %}
 
+{% if without_usernames %}
+{{ protocol }}://{{ site.domain }}{% url userena_activate activation_key %}
+{% else %}
 {{ protocol }}://{{ site.domain }}{% url userena_activate user.username activation_key %}
+{% endif %}
 
 {% trans "Thanks for using our site!" %}
 
