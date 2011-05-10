@@ -70,7 +70,7 @@ def signup(request, signup_form=SignupForm,
 
             if success_url: redirect_to = success_url
             else: redirect_to = reverse('userena_signup_complete',
-                                        kwargs={'user': user})
+                                        kwargs={'username': user.username})
 
             # A new signed user should logout the old one.
             if request.user.is_authenticated():
