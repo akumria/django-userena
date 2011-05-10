@@ -79,9 +79,10 @@ def signup(request, signup_form=SignupForm,
         if form.is_valid():
             user = form.save()
 
-            if success_url: redirect_to = success_url
-            else: redirect_to = reverse('userena_signup_complete',
-                                        kwargs={'username': user.username})
+            if success_url:
+                redirect_to = success_url
+            else:
+                redirect_to = reverse_with_username('userena_signup_complete', user)
 
             # A new signed user should logout the old one.
             if request.user.is_authenticated():
@@ -141,8 +142,7 @@ def activate(request, username, activation_key,
                              fail_silently=True)
 
         if success_url: redirect_to = success_url
-        else: redirect_to = reverse('userena_profile_detail',
-                                    kwargs={'username': user.username})
+        else: redirect_to = reverse_with_username('userena_profile_detail', user)
         return redirect(redirect_to)
     else:
         if not extra_context: extra_context = dict()
@@ -187,8 +187,7 @@ def email_confirm(request, username, confirmation_key,
     user = UserenaSignup.objects.confirm_email(username, confirmation_key)
     if user:
         if success_url: redirect_to = success_url
-        else: redirect_to = reverse('userena_email_confirm_complete',
-                                    kwargs={'username': user.username})
+        else: redirect_to = reverse_with_username('userena_email_confirm_complete', user)
         return redirect(redirect_to)
     else:
         if not extra_context: extra_context = dict()
@@ -304,8 +303,7 @@ def signin(request, auth_form=AuthenticationForm,
                     request.REQUEST.get(redirect_field_name), user)
                 return redirect(redirect_to)
             else:
-                return redirect(reverse('userena_disabled',
-                                        kwargs={'username': user.username}))
+                return redirect(reverse_with_username('userena_disabled', user))
 
     if not extra_context: extra_context = dict()
     extra_context['form'] = form
@@ -372,8 +370,7 @@ def email_change(request, username, form=ChangeEmailForm,
             email_result = form.save()
 
             if success_url: redirect_to = success_url
-            else: redirect_to = reverse('userena_email_change_complete',
-                                        kwargs={'username': user.username})
+            else: redirect_to = reverse_with_username('userena_email_change_complete', user)
             return redirect(redirect_to)
 
     if not extra_context: extra_context = dict()
@@ -434,8 +431,7 @@ def password_change(request, username, template_name='userena/password_form.html
             form.save()
 
             if success_url: redirect_to = success_url
-            else: redirect_to = reverse('userena_password_change_complete',
-                                        kwargs={'username': user.username})
+            else: redirect_to = reverse_with_username('userena_password_change_complete', user)
             return redirect(redirect_to)
 
     if not extra_context: extra_context = dict()
@@ -512,7 +508,7 @@ def profile_edit(request, username, edit_profile_form=EditProfileForm,
                                  fail_silently=True)
 
             if success_url: redirect_to = success_url
-            else: redirect_to = reverse('userena_profile_detail', kwargs={'username': username})
+            else: redirect_to = reverse_with_username('userena_profile_detail', user)
             return redirect(redirect_to)
 
     if not extra_context: extra_context = dict()
