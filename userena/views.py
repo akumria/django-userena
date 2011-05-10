@@ -185,7 +185,7 @@ def email_confirm(request, username, confirmation_key,
                                   template_name,
                                   extra_context=extra_context)
 
-def direct_to_user_template(request, username, template_name,
+def direct_to_user_template(request, template_name, username=None,
                             extra_context=None):
     """
     Simple wrapper for Django's :func:`direct_to_template` view.
